@@ -27,3 +27,7 @@ tc class add dev "$IFACE" parent 1: classid 1:10 htb rate "$LIMIT"
 # Filter outgoing traffic for the specified port
 tc filter add dev "$IFACE" protocol ip parent 1: prio 1 u32 \
     match ip dport "$PORT" 0xffff flowid 1:10
+
+# Filter received traffict for the specified port
+tc filter add dev "$IFACE" protocol ip parent 1: prio 2 u32 \
+    match ip sport "$PORT" 0xffff flowid 1:10
